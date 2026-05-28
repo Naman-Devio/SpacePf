@@ -5,19 +5,18 @@ import { Suspense } from "react";
 import * as THREE from "three";
 import CameraRig from "./CameraRig";
 import StarField from "./StarField";
+import CometScar from "./CometScar";
+import Zone1Cinematic from "./zone1/Zone1Cinematic";
 
 /**
  * SpaceScene — the ONE persistent <Canvas> for the entire site.
  *
- * Spec mandates:
- *   - Single Canvas behind everything, never unmounts
- *   - dpr capped at 1.5 for high-DPI performance
- *   - linear colorspace + tone mapping for HDR-ish star bloom
- *   - All scene objects mounted as children; zone gating happens inside
- *     each child via `useScrollProgress`. This component stays dumb.
+ * Phase-2 (Zone 1) additions on top of Phase 1:
+ *   - <Zone1Cinematic />     → shooting star, shockwave, particle text
+ *   - <CometScar />          → persistent intro burn, fades into Zone 5
  *
- * Phase 1 contains: <CameraRig /> + <StarField />.
- * Later phases will add ZoneN groups, post-processing, comet scar, etc.
+ * The cinematic clock + skip state live in <CinematicProvider> (wired in
+ * page.tsx) — both this canvas's children AND the DOM overlays consume it.
  */
 export default function SpaceScene() {
   return (
@@ -34,16 +33,16 @@ export default function SpaceScene() {
           antialias: true,
           alpha: true,
           powerPreference: "high-performance",
-          // Linear workflow → bloom and additive stars look correct
           toneMapping: THREE.ACESFilmicToneMapping,
           outputColorSpace: THREE.SRGBColorSpace,
         }}
-        // Deep-space tint background (matches --void). Not pure black on purpose.
         style={{ background: "#04040a" }}
       >
         <Suspense fallback={null}>
           <CameraRig />
           <StarField />
+          <CometScar />
+          <Zone1Cinematic />
         </Suspense>
       </Canvas>
     </div>
