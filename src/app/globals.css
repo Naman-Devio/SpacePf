@@ -1,0 +1,64 @@
+@import "tailwindcss";
+
+/* ─── Palette (per spec) ──────────────────────────────────────────────────── */
+:root {
+  --void:         #04040a; /* base — not pure black, has depth */
+  --plasma:       #0ff4c6; /* primary accent — electric teal */
+  --pulsar:       #ff3cac; /* secondary — hot magenta */
+  --neutron:      #ffe156; /* highlight — cold yellow */
+  --binary-a:     #b8d4ff; /* blue-white giant */
+  --binary-b:     #ffb347; /* orange dwarf */
+  --wormhole:     #c8b1ff; /* violet — mystery, experience */
+  --disk-inner:   #ffffff;
+  --disk-outer:   #ff6b35;
+  --nebula-deep:  #1a0533;
+  --glass:        rgba(255, 255, 255, 0.035);
+  --glass-border: rgba(255, 255, 255, 0.07);
+}
+
+@theme inline {
+  --color-void: var(--void);
+  --color-plasma: var(--plasma);
+  --color-pulsar: var(--pulsar);
+  --color-neutron: var(--neutron);
+  --color-binary-a: var(--binary-a);
+  --color-binary-b: var(--binary-b);
+  --color-wormhole: var(--wormhole);
+  --color-disk-inner: var(--disk-inner);
+  --color-disk-outer: var(--disk-outer);
+  --color-nebula-deep: var(--nebula-deep);
+}
+
+/* ─── Base reset ──────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  background: var(--void);
+  color: #f5f7ff;
+  min-height: 100%;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  /* Cursor will be replaced by Cursor.tsx in Phase 2; for now keep native cursor visible */
+  font-family: var(--font-dm-sans), system-ui, sans-serif;
+}
+
+/* The persistent canvas sits beneath everything. Never display:none it. */
+.scene-root {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none; /* events flow to scroll content; R3F objects opt-in to pointer events */
+}
+
+/* Reduced motion gate */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
