@@ -55,6 +55,3 @@ npm start
 
 If `npm run build --turbopack` is slow in CI, temporarily switch the build script in `package.json` to `"next build"` (plain webpack); both work.
 
-## What's NOT here yet
-
-Zone 1 cinematic intro, Zone 2 hero cockpit (Signal Sphere + HUD), Zones 3–7, custom cursor, audio, mobile fallback, accessibility passes. Per your rules: **"Do not build Zone 1 cinematic until I say next zone."**
